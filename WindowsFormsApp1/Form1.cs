@@ -152,6 +152,7 @@ namespace WindowsFormsApp1
                 string file = openfile.FileName;
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom; // 设置 PictureBox 的缩放模式为 Zoom
                 pictureBox1.ImageLocation = file;
+                pictureBox1.Tag = file;
 
                 pictureBox2.LoadCompleted += PictureBox2_LoadCompleted;
                 string outfile = "dith.png";
