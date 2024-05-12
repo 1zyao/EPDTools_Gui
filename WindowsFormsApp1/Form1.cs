@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Management;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Security.Cryptography;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
-using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.IO.Ports;
+using System.Management;
+using System.Windows.Forms;
 
 //串口参数结构体
 struct COMPORT_ATTRIBUTE
@@ -272,7 +263,9 @@ namespace WindowsFormsApp1
                     label6.Text = "EPDTools.exe：丢失";
                     label6.ForeColor = Color.Red;
                 }
-            }else if (file.Equals("opencv_world452.dll")){
+            }
+            else if (file.Equals("opencv_world452.dll"))
+            {
                 if (cv)
                 {
                     label7.Text = "opencv_world452.dll：存在";
@@ -283,7 +276,8 @@ namespace WindowsFormsApp1
                     label7.Text = "opencv_world452.dll：丢失";
                     label7.ForeColor = Color.Red;
                 }
-            }else if (file.Equals("FloydSteinbergDithering.exe"))
+            }
+            else if (file.Equals("FloydSteinbergDithering.exe"))
             {
                 if (FSD)
                 {
@@ -384,7 +378,7 @@ namespace WindowsFormsApp1
                         string programPath = "EPDTools.exe";
 
                         // 要传递给程序的参数
-                        string arguments = "-f " + imagePath + "-w " + method + " -p " + selectedPortName;
+                        string arguments = "-f " + imagePath + " -m " + method + " -w serial -p " + selectedPortName;
 
                         // 创建进程启动信息对象
                         ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -393,7 +387,12 @@ namespace WindowsFormsApp1
 
                         // 设置进程启动信息
                         startInfo.UseShellExecute = false;  // 必须设置为false以便可以指定Arguments
-                        startInfo.RedirectStandardOutput = true; // 如果需要捕获程序的输出，可以设置为true
+
+                        if (!checkBox1.Checked)
+                        {
+                            startInfo.RedirectStandardOutput = true; // 如果需要捕获程序的输出，可以设置为true
+                            startInfo.CreateNoWindow = true;
+                        }
 
                         // 创建进程对象
                         Process process = new Process();
@@ -407,9 +406,13 @@ namespace WindowsFormsApp1
                             // 等待进程退出
                             process.WaitForExit();
 
-                            // 可以读取程序的输出
-                            string output = process.StandardOutput.ReadToEnd();
-                            Console.WriteLine(output);
+                            if (!checkBox1.Checked)
+                            {
+                                // 可以读取程序的输出
+                                string output = process.StandardOutput.ReadToEnd();
+                                Console.WriteLine(output);
+                                MessageBox.Show(output);
+                            }
 
                             // 检查文件是否存在
                             if (File.Exists("temp.png"))

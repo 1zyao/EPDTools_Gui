@@ -1,13 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -36,7 +29,7 @@ namespace WindowsFormsApp1
                     {
                         progressBar1.Value = args.ProgressPercentage;
                     });
-                    label3.Text = args.ProgressPercentage+" %";
+                    label3.Text = args.ProgressPercentage + " %";
                 };
 
                 // 下载完成事件处理
@@ -51,7 +44,7 @@ namespace WindowsFormsApp1
                     else
                     {
                         Close();
-                        MessageBox.Show("文件 " + label2.Text + " 下载完成！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("文件 " + savePath + " 下载完成！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 };
 
@@ -75,7 +68,7 @@ namespace WindowsFormsApp1
         // 在 Form3 中的 FormClosed 事件处理程序中调用 Form1 的 CheckOnly 方法
         private void Form3_FormClosed(object sender, FormClosedEventArgs e)
         {
-                check_only(label2.Text);
+            check_only(label2.Text);
         }
     }
 }

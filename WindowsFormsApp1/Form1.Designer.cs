@@ -50,6 +50,8 @@ namespace WindowsFormsApp1
             this.methodsel = new System.Windows.Forms.ComboBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -243,11 +245,35 @@ namespace WindowsFormsApp1
             this.label4.TabIndex = 20;
             this.label4.Text = "红黑取模";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Enabled = false;
+            this.checkBox1.Location = new System.Drawing.Point(272, 374);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(180, 16);
+            this.checkBox1.TabIndex = 21;
+            this.checkBox1.Text = "是否显示EPDTools命令行窗口";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(272, 397);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(155, 12);
+            this.label10.TabIndex = 22;
+            this.label10.Text = "此功能存在bug，暂不开放。";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.methodsel);
@@ -300,6 +326,8 @@ namespace WindowsFormsApp1
         private ComboBox methodsel;
         private PictureBox pictureBox3;
         private Label label4;
+        private CheckBox checkBox1;
+        private Label label10;
     }
 }
 
