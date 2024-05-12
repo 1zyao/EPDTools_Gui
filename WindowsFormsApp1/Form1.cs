@@ -5,6 +5,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Ports;
 using System.Management;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 //串口参数结构体
@@ -439,7 +441,7 @@ namespace WindowsFormsApp1
             checkonly(file);
         }
 
-        public void updateimg(string imagePath)
+        public async void updateimg(string imagePath)
         {
             if (comport.SelectedItem != null)
             {
@@ -477,19 +479,30 @@ namespace WindowsFormsApp1
                         {
                             startInfo.RedirectStandardOutput = true; // 如果需要捕获程序的输出，可以设置为true
                             startInfo.CreateNoWindow = true;
+                            startInfo.RedirectStandardOutput = true;
+                            startInfo.RedirectStandardError = true;
+                            startInfo.RedirectStandardInput = true; // Is a MUST!
                         }
 
                         // 创建进程对象
                         Process process = new Process();
                         process.StartInfo = startInfo;
 
+                        process.StartInfo.UseShellExecute = false;
+                        process.EnableRaisingEvents = true;
+
                         try
                         {
                             // 启动进程
                             process.Start();
 
-                            // 等待进程退出
-                            process.WaitForExit();
+                            process.BeginOutputReadLine();
+                            process.BeginErrorReadLine();
+
+
+
+                            // 等待进程退出，如果你需要的话
+                            await process.WaitForExitAsync();
 
                             if (!checkBox1.Checked)
                             {
@@ -527,7 +540,6 @@ namespace WindowsFormsApp1
                 MessageBox.Show("请选择一个串行端口！");
             }
         }
-
         private void loadimg(string file, string outfile, string method, PictureBox pictureBox)
         {
             // 要执行的程序的路径
@@ -564,6 +576,42 @@ namespace WindowsFormsApp1
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (checkBox1.CheckState)
+            {
+                case CheckState.Checked:
+                    // Code for checked state.  
+                    break;
+                case CheckState.Unchecked:
+                    DialogResult res = MessageBox.Show("关闭显示命令行请通过底座led判断状况且无法观察上传进度，是否继续？", "温馨提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (res == DialogResult.Yes)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        checkBox1.Checked = true;
+                    }
+                    break;
+                case CheckState.Indeterminate:
+                    // Code for indeterminate state.  
+                    break;
+            }
+        }
+    }
+
+    public static class ProcessExtensions
+    {
+        public static Task<bool> WaitForExitAsync(this Process process)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+            process.EnableRaisingEvents = true;
+            process.Exited += (sender, args) => tcs.TrySetResult(true);
+            if (process.HasExited) tcs.TrySetResult(true);
+            return tcs.Task;
         }
     }
 }
