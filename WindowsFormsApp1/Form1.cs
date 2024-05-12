@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Ports;
 using System.Management;
@@ -140,8 +141,80 @@ namespace WindowsFormsApp1
 
             if (openfile.ShowDialog() == DialogResult.OK && (openfile.FileName != ""))
             {
-                string file = openfile.FileName;
-                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom; // 设置 PictureBox 的缩放模式为 Zoom
+                Image image = Image.FromFile(openfile.FileName);
+                if (image.Width.Equals(122) && image.Height.Equals(250))
+                {
+                }
+                else if (image.Width.Equals(250) && image.Height.Equals(122))
+                {
+                    image.RotateFlip(RotateFlipType.Rotate90FlipX);
+                }
+                else
+                {
+                    DialogResult result = MessageBox.Show("您的图片分辨率不正确，请选择缩放或拉伸，是为缩放，否为拉伸", "选择操作", MessageBoxButtons.YesNoCancel);
+
+                    if (image.Width > image.Height)
+                    {
+                        image.RotateFlip(RotateFlipType.Rotate90FlipX);
+                    }
+
+                    if (result == DialogResult.Yes)
+                    {
+                        // 定义目标 Bitmap 的大小
+                        int targetWidth = 122;
+                        int targetHeight = 250;
+
+                        // 计算绘制图像在目标 Bitmap 中的位置和大小，保持原始比例不变
+                        int width, height, x, y;
+
+                        if ((float)image.Width / image.Height > (float)targetWidth / targetHeight)
+                        {
+                            width = targetWidth;
+                            height = (int)((float)image.Height * targetWidth / image.Width);
+                            x = 0;
+                            y = (targetHeight - height) / 2;
+                        }
+                        else
+                        {
+                            width = (int)((float)image.Width * targetHeight / image.Height);
+                            height = targetHeight;
+                            x = (targetWidth - width) / 2;
+                            y = 0;
+                        }
+
+                        // 创建目标 Bitmap 对象
+                        Bitmap resizedImage = new Bitmap(targetWidth, targetHeight);
+
+                        // 创建 Graphics 对象，并在目标 Bitmap 上绘制原始图像
+                        using (Graphics g = Graphics.FromImage(resizedImage))
+                        {
+                            g.Clear(Color.White); // 使用白色填充整个图像区域
+                            g.DrawImage(image, x, y, width, height);
+                        }
+
+                        image = resizedImage;
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        // 创建一个新的Bitmap对象，用于存储拉伸后的图像
+                        Bitmap stretchedImage = new Bitmap(122, 250);
+                        // 创建一个Graphics对象，用于绘制图像
+                        using (Graphics g = Graphics.FromImage(stretchedImage))
+                        {
+                            // 将源图像拉伸绘制到自身的指定位置上，实现图像的拉伸
+                            g.DrawImage(image, 0, 0, 122, 250);
+                        }
+                        image = stretchedImage;
+                    }
+                    else
+                    {
+                        MessageBox.Show("你取消了选择，请自行修改图片分辨率到122*250");
+                        return;
+                    }
+                }
+                string file = "temp.png";
+                image.Save(file);
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                 pictureBox1.ImageLocation = file;
                 pictureBox1.Tag = file;
 
@@ -203,7 +276,19 @@ namespace WindowsFormsApp1
             if (pictureBox1.Image != null && pictureBox1.Tag != null)
             {
                 string imagePath = pictureBox1.Tag.ToString();
+                Image image = Image.FromFile(imagePath);
+                image.RotateFlip(RotateFlipType.Rotate90FlipX);
+                image.RotateFlip(RotateFlipType.Rotate180FlipX);
+                image.Save(imagePath);
+
                 updateimg(imagePath);
+
+                pictureBox1.Image.Dispose();
+                pictureBox1.Image = null;
+                pictureBox2.Image.Dispose();
+                pictureBox2.Image = null;
+                pictureBox3.Image.Dispose();
+                pictureBox3.Image = null;
             }
             else
             {
@@ -471,7 +556,6 @@ namespace WindowsFormsApp1
 
                 // 等待进程退出
                 process.WaitForExit();
-
 
                 pictureBox.SizeMode = PictureBoxSizeMode.Zoom; // 设置 PictureBox 的缩放模式为 Zoom
                 pictureBox.ImageLocation = outfile;
