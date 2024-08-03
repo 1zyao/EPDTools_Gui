@@ -1,6 +1,7 @@
 ﻿using QRCoder;
 using System;
 using System.Drawing;
+using System.IO.Ports;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -150,17 +151,14 @@ namespace WindowsFormsApp1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string fileName = "temp.png";
-            using (Bitmap bmp = new Bitmap(canvasPanel.Width, canvasPanel.Height))
-            {
-                canvasPanel.DrawToBitmap(bmp, new Rectangle(0, 0, canvasPanel.Width, canvasPanel.Height));
-                bmp.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
-            }
-            // 调用 Form1 的 updateimg 方法
+            Bitmap bmp = new Bitmap(canvasPanel.Width, canvasPanel.Height);
+
+            canvasPanel.DrawToBitmap(bmp, new Rectangle(0, 0, canvasPanel.Width, canvasPanel.Height));
+
             Form1 form1 = Application.OpenForms["Form1"] as Form1;
             if (form1 != null)
             {
-                form1.updateimg(fileName);
+                form1.updateimg(bmp);
             }
         }
     }

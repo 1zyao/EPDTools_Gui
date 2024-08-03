@@ -139,7 +139,7 @@ namespace WindowsFormsApp1
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(440, 18);
             this.label2.TabIndex = 8;
-            this.label2.Text = "请先在主页选择端口！二维码推荐使用红黑取模模式。";
+            this.label2.Text = "请先在主页选择端口！";
             // 
             // Form2
             // 

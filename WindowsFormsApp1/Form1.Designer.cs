@@ -30,6 +30,7 @@ namespace WindowsFormsApp1
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.comport = new System.Windows.Forms.ComboBox();
             this.comtext = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -41,19 +42,12 @@ namespace WindowsFormsApp1
             this.label3 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.methodsel = new System.Windows.Forms.ComboBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // comport
@@ -115,7 +109,6 @@ namespace WindowsFormsApp1
             this.pictureBox2.Size = new System.Drawing.Size(122, 250);
             this.pictureBox2.TabIndex = 6;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // label2
             // 
@@ -140,7 +133,7 @@ namespace WindowsFormsApp1
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(465, 332);
+            this.button2.Location = new System.Drawing.Point(319, 333);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 9;
@@ -150,7 +143,7 @@ namespace WindowsFormsApp1
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(578, 76);
+            this.button3.Location = new System.Drawing.Point(418, 80);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(131, 79);
             this.button3.TabIndex = 10;
@@ -158,120 +151,32 @@ namespace WindowsFormsApp1
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // label5
+            // trackBar1
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(576, 315);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 12);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "文件依赖";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(578, 331);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(125, 12);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "EPDTools.exe：待检查";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(576, 343);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(167, 12);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "opencv_world452.dll：待检查";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(578, 355);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(215, 12);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "FloydSteinbergDithering.exe：待检查";
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(578, 377);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 16;
-            this.button4.Text = "检查文件";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("宋体", 10F);
-            this.label9.Location = new System.Drawing.Point(25, 403);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(63, 14);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "选择模式";
-            // 
-            // methodsel
-            // 
-            this.methodsel.FormattingEnabled = true;
-            this.methodsel.Items.AddRange(new object[] {
-            "色彩抖动",
-            "红黑取模"});
-            this.methodsel.Location = new System.Drawing.Point(94, 401);
-            this.methodsel.Name = "methodsel";
-            this.methodsel.Size = new System.Drawing.Size(121, 20);
-            this.methodsel.TabIndex = 18;
-            this.methodsel.Text = "色彩抖动";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Location = new System.Drawing.Point(418, 76);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(122, 250);
-            this.pictureBox3.TabIndex = 19;
-            this.pictureBox3.TabStop = false;
+            this.trackBar1.Location = new System.Drawing.Point(272, 377);
+            this.trackBar1.Maximum = 255;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(104, 45);
+            this.trackBar1.TabIndex = 11;
+            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar1.Value = 129;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 12F);
-            this.label4.Location = new System.Drawing.Point(443, 57);
+            this.label4.Location = new System.Drawing.Point(382, 383);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 16);
-            this.label4.TabIndex = 20;
-            this.label4.Text = "红黑取模";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(272, 374);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(180, 16);
-            this.checkBox1.TabIndex = 21;
-            this.checkBox1.Text = "是否显示EPDTools命令行窗口";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.label4.Size = new System.Drawing.Size(95, 12);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "当前扩散值：129";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.checkBox1);
+            this.ClientSize = new System.Drawing.Size(584, 450);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.methodsel);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label3);
@@ -284,10 +189,9 @@ namespace WindowsFormsApp1
             this.Controls.Add(this.comport);
             this.Name = "Form1";
             this.Text = "EPDTools.exe - 图形化";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -306,16 +210,9 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button button4;
-        private Label label9;
-        private ComboBox methodsel;
-        private PictureBox pictureBox3;
+        private System.IO.Ports.SerialPort serialPort1;
+        public TrackBar trackBar1;
         private Label label4;
-        private CheckBox checkBox1;
     }
 }
 
